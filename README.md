@@ -5,9 +5,12 @@
 As the title describes...
 A small script which downloads all offered audiobooks from the [Deutsche Bahn iceportal](https://iceportal.de/).
 
-![Gif showing how episodes are downloaded](https://github.com/SirBenedick/iceportal-audiobooks-downloader/blob/master/git.gif)
+<div align="center">
+  <img src="https://github.com/SirBenedick/iceportal-audiobooks-downloader/blob/master/git.gif" alt="Gif showing how episodes are downloaded"/>
+</div>
 
 Original implementation by [SirBenedick](https://github.com/SirBenedick/iceportal-audiobooks-downloader).
+This fork uses properly tagged audio files and covers.
 
 ## Setup
 
