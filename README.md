@@ -1,16 +1,16 @@
-# iceportal-audiobooks-downloader
+# iceportal-downloader
 
-(only works when connected to the ICE wifi)
+It only works when connected to the wifi of the Deutsche Bahn (i.e. [`WIFIonICE` / `WIFI@DB`](https://inside.bahn.de/wifionice-wlan-ice-login/)).
+Make sure that you're signed in first by visiting <https://login.wifionice.de> or <https://wifi.bahn.de>.
 
-As the title describes...
-A small script which downloads all offered audiobooks from the [Deutsche Bahn iceportal](https://iceportal.de/).
+This is a small script that downloads all offered audiobooks and magazines from the [Deutsche Bahn iceportal](https://iceportal.de/).
 
 <div align="center">
   <img src="https://github.com/SirBenedick/iceportal-audiobooks-downloader/blob/master/git.gif" alt="Gif showing how episodes are downloaded"/>
 </div>
 
 Original implementation by [SirBenedick](https://github.com/SirBenedick/iceportal-audiobooks-downloader).
-This fork uses properly tagged audio files and covers.
+This fork uses properly tagged audio files and covers and can also download newspapers and magazines.
 
 ## Setup
 
@@ -23,4 +23,4 @@ This fork uses properly tagged audio files and covers.
 
 ### ToDo
 
-* select which audiobooks to download
+* select which audiobooks or magazines to download

@@ -1,16 +1,40 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    addressable (2.8.0)
+      public_suffix (>= 2.0.2, < 5.0)
+    ast (2.4.2)
     mp3info (0.8.5)
       ruby-mp3info (>= 0.8.5)
+    parallel (1.21.0)
+    parser (3.0.2.0)
+      ast (~> 2.4.1)
+    public_suffix (4.0.6)
+    rainbow (3.0.0)
+    regexp_parser (2.1.1)
+    rexml (3.2.5)
+    rubocop (1.22.3)
+      parallel (~> 1.10)
+      parser (>= 3.0.0.0)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.8, < 3.0)
+      rexml
+      rubocop-ast (>= 1.12.0, < 2.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 1.4.0, < 3.0)
+    rubocop-ast (1.13.0)
+      parser (>= 3.0.1.1)
     ruby-mp3info (0.8.10)
     ruby-progressbar (1.11.0)
+    unicode-display_width (2.1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable
   mp3info
+  rubocop
   ruby-progressbar
 
 BUNDLED WITH
