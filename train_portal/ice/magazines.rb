@@ -1,12 +1,16 @@
-module IcePortal
+module TrainPortal::Ice
   module Magazines
     module_function
     DOWNLOAD_PATH = File.expand_path('./magazines')
 
     def all
-      API.get_json('/api1/rs/page/zeitungskiosk')['teaserGroups'].first['items'].select do |magazine|
+      @@all ||= API.get_json('/api1/rs/page/zeitungskiosk')['teaserGroups'].first['items'].select do |magazine|
         magazine.dig('picture', 'marker', 'text') == 'Freies Exemplar'
       end
+    end
+
+    def select_hash
+      all.map.with_index { |magazine, index| [magazine['title'], index] }.to_h
     end
 
     def download(base_json)
@@ -15,9 +19,9 @@ module IcePortal
       # slug = base_json['navigation']['href'].split('/').last
       edition = base_json['picture']['src'].split('/').last.sub(/\.\w+\z/, '')
       slug = "#{base_json['title']}_#{edition}".gsub(/\W+/, '_')
-      directory = File.join(DOWNLOAD_PATH, base_json['title'].gsub(/\W+/, '_'))
+      sub_directory = self.name.split('::').last
 
-      API.file_download("/#{details['url']}", File.join(DOWNLOAD_PATH, "#{slug}.pdf"))
+      API.file_download("/#{details['url']}", File.join(sub_directory, "#{slug}.pdf"))
     end
   end
 end

@@ -14,6 +14,16 @@ This fork uses properly tagged audio files and covers and can also download news
 
 ## Setup
 
+You might need these packages installed:
+
+```bash
+# Debian / Ubuntu
+sudo apt install build-essential libssl-dev zlib1g-dev
+
+# Fedora
+sudo dnf install openssl-devel zlib-devel gcc gcc-c++ make libyaml-devel ruby-devel
+```
+
 1. Ensure you have [Ruby installed](https://www.ruby-lang.org/en/documentation/installation/) (I usually recommend [`rbenv`](https://github.com/rbenv/rbenv#installation) but any Ruby installation should do)
 2. `git clone 'git@github.com:alexanderadam/iceportal-audiobooks-downloader.git'`
 3. `cd iceportal-audiobooks-downloader`
