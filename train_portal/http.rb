@@ -3,7 +3,8 @@ require 'tty-progressbar'
 
 module TrainPortal
   module API
-    def get(path, full_response: false)
+    def get(path, full_response: false, base_url: nil)
+      base_url ||= default_base_url
       left_tries ||= 3
       uri = URI(Addressable::URI.encode_component("#{base_url}#{path}"))
       http = Net::HTTP.new(uri.hostname, uri.port)
@@ -23,19 +24,20 @@ module TrainPortal
       retry
     end
 
-    def get_json(path)
-      body = get(path)
+    def get_json(path, base_url: nil)
+      body = get(path, base_url:)
       JSON.parse(body)
     rescue => e
       binding.irb
     end
 
-    def file_download(url_path, file_path, skip_progress_bar: false)
+    def file_download(url_path, file_path, skip_progress_bar: false, base_url: nil)
       file_path = file_path.sub(%r{^/}, '')
       file_path = TrainPortal.download_directory(file_path)
       return file_path if File.exist?(file_path)
 
       FileUtils.mkdir_p File.dirname(file_path)
+      base_url ||= default_base_url
 
       uri = URI(Addressable::URI.encode_component("#{base_url}#{url_path}"))
       total_size = Net::HTTP.get_response(uri)['content-length'].to_i

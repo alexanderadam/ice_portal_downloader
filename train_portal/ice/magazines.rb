@@ -1,10 +1,11 @@
 module TrainPortal::Ice
   module Magazines
     module_function
-    DOWNLOAD_PATH = File.expand_path('./magazines')
-
     def all
-      @@all ||= API.get_json('/api1/rs/page/zeitungskiosk')['teaserGroups'].first['items'].select do |magazine|
+      @@all ||= API.get_json('/api1/rs/page/zeitungskiosk')['teaserGroups']
+                   .first['items']
+                   .sort_by { |h| h['title'] }
+                   .select do |magazine|
         magazine.dig('picture', 'marker', 'text') == 'Freies Exemplar'
       end
     end

@@ -13,7 +13,9 @@ module TrainPortal::Ice
       @@all ||= begin
       json_data = API.get_json('/api1/rs/page/hoerbuecher')
 
-        json_data['teaserGroups'].first['items'].map do |item|
+        json_data['teaserGroups'].first['items']
+                                 .sort_by { |h| h['title'] }
+                                 .map do |item|
           title = item['title']
           title << " [#{item['subtitle']}]" if item['subtitle']
           item['navigation'].merge(title: title)
@@ -51,14 +53,12 @@ module TrainPortal::Ice
 
       file_path = File.join(tmp_dir, "#{slug}_#{track_no}.mp3")
       API.file_download download_url, file_path, skip_progress_bar: true
-      file_path
     end
 
     def download_cover(book_json, tmp_dir)
       cover_image_path = "/#{book_json['picture']['src']}"
       cover_path = File.join(tmp_dir, "cover.#{cover_image_path.split('.').last || 'jpg'}")
       API.file_download cover_image_path, cover_path
-      cover_path
     end
 
     def download(base_json)

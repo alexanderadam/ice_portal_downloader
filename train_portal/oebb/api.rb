@@ -12,6 +12,6 @@ module TrainPortal::Oebb
       response.code == '200' && response.body.include?('ÖBB Railnet')
     end
 
-    def base_url = 'https://railnet.oebb.at'
+    def default_base_url = 'https://railnet.oebb.at'
   end
 end
