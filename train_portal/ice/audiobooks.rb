@@ -9,6 +9,8 @@ module TrainPortal::Ice
       'audioBook' => 183
     }.freeze
 
+    def title = '🎧 Audiobooks'
+
     def all
       @@all ||= begin
       json_data = API.get_json('/api1/rs/page/hoerbuecher')

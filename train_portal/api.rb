@@ -79,7 +79,11 @@ module TrainPortal
       nil
     end
 
-    def title = "#{portal_name} Media Downloader in #{current_ssid}".strip
+    def title
+      pastel = Pastel.new
+      ["#{portal_name} Media Downloader", current_ssid].compact.map { |w| pastel.blue(w) }.join(' in ')
+    end
     def portal_name = ancestors.first.name.split('::')[1]
+    def media = []
   end
 end

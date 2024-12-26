@@ -67,6 +67,7 @@ DEPENDENCIES
   m3u8
   mp3info
   nokogiri
+  pastel
   rubocop
   stringex
   tty-progressbar

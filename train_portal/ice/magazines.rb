@@ -1,6 +1,9 @@
 module TrainPortal::Ice
   module Magazines
     module_function
+
+    def title = '📰 Magazines'
+
     def all
       @@all ||= API.get_json('/api1/rs/page/zeitungskiosk')['teaserGroups']
                    .first['items']
