@@ -1,0 +1,5 @@
+require_relative 'api'
+require_relative 'audiobooks'
+require_relative 'books'
+require_relative 'music'
+require_relative 'movies'

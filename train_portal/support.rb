@@ -1,4 +1,4 @@
-module IcePortal
+module TrainPortal
   module Support
     module_function
 
