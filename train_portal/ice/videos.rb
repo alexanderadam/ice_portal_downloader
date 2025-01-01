@@ -6,6 +6,10 @@ require 'stringex'
 require 'open-uri'
 require 'zip'
 
+if OpenSSL::SSL.const_defined?(:OP_IGNORE_UNEXPECTED_EOF)
+  OpenSSL::SSL::SSLContext::DEFAULT_PARAMS[:options] |= OpenSSL::SSL::OP_IGNORE_UNEXPECTED_EOF
+end
+
 module TrainPortal::Ice
   module Videos
     module_function
@@ -188,7 +192,8 @@ module TrainPortal::Ice
       zip_path = File.join(tmp_dir, 'bento4.zip')
 
       File.open(zip_path, 'wb') do |file|
-        file.write(URI.open(bento_url).open(open_timeout: READ_TIMEOUT, read_timeout: READ_TIMEOUT).read)
+        uri = URI.parse(bento_url).open(open_timeout: READ_TIMEOUT, read_timeout: READ_TIMEOUT)
+        file.write(uri.read)
       end
 
       Zip::File.open(zip_path) do |zip_file|
