@@ -16,6 +16,9 @@ module TrainPortal::Ice
       win: 'x86_64-microsoft-win32'
     }
     BENTO_URL = 'https://www.bok.net/Bento4/binaries/Bento4-SDK-1-6-0-641.{platform}.zip'
+    READ_TIMEOUT = 60 # seconds
+
+    def title = '🍿 Videos'
 
     def all
       @@all ||= get_json('/api/portal-teasers')['hydra:member'].sort_by { |h| h['titleFull'] }
@@ -70,7 +73,7 @@ module TrainPortal::Ice
       file_name = Dir.glob("#{file_name}*.mp4").first
       mp4decode(file_name, manifest_mpd_url)
       reencode(file_name)
-    end
+  end
 
     def yt_dlp(download_url, file_name)
       unless system('which yt-dlp > /dev/null 2>&1')
@@ -117,36 +120,13 @@ module TrainPortal::Ice
     end
 
     def mp4decode(input_file, manifest_mpd_url)
-      unless system('which mp4decrypt > /dev/null 2>&1')
-        puts 'downloading mp4decrypt'
-        # Download and unpack Bento4 SDK
-        platform = case RUBY_PLATFORM
-                   when /linux/
-                     'linux'
-                   when /darwin/
-                     'osx'
-                   when /mingw|mswin/
-                     'win'
-                   else
-                     raise "Unsupported platform: #{RUBY_PLATFORM}"
-                   end
+      mp4decrypt_path = `which mp4decrypt > /dev/null 2>&1`.strip
 
-        bento_url = BENTO_URL.gsub('{platform}', BENTO_PLATFORMS[platform.to_sym])
-        temp_dir = Dir.mktmpdir
-        zip_path = File.join(temp_dir, 'bento4.zip')
-
-        File.open(zip_path, 'wb') do |file|
-          file.write(URI.open(bento_url).read)
-        end
-
-        ::Zip::ZipFile.open(zip_path) do |zip_file|
-          zip_file.each do |entry|
-            entry.extract(File.join(temp_dir, entry.name))
-          end
-        end
-
-        ENV['PATH'] = "#{File.join(temp_dir, 'bin')}:#{ENV['PATH']}"
+      if mp4decrypt_path.empty?
+        mp4decrypt_path = File.join(tmp_dir, 'bin', 'mp4decrypt')
+        download_mp4decrypt(mp4decrypt_path) unless File.exist?(mp4decrypt_path)
       end
+      binding.irb
 
       # Extract the decryption key from the manifest.mpd
       manifest = Nokogiri::XML(URI.open(manifest_mpd_url).read)
@@ -187,5 +167,36 @@ module TrainPortal::Ice
     def read_mpd_manifest(url) = Nokogiri::XML(URI.open(url).read)
     def sanitize_string(string) = string.to_url(force_downcase: false).gsub('-', '_')
     def full_path(sub_path) = TrainPortal.download_directory(File.join('videos', sub_path))
+    def tmp_dir = TrainPortal.download_directory('tmp')
+
+    def download_mp4decrypt(destination_path)
+      puts 'downloading mp4decrypt'
+      # Download and unpack Bento4 SDK
+      platform = case RUBY_PLATFORM
+                 when /linux/
+                   'linux'
+                 when /darwin/
+                   'osx'
+                 when /mingw|mswin/
+                   'win'
+                 else
+                   raise "Unsupported platform: #{RUBY_PLATFORM}"
+                 end
+
+      bento_url = BENTO_URL.gsub('{platform}', BENTO_PLATFORMS[platform.to_sym])
+      FileUtils.mkdir_p(File.join(tmp_dir, 'bin'))
+      zip_path = File.join(tmp_dir, 'bento4.zip')
+
+      File.open(zip_path, 'wb') do |file|
+        file.write(URI.open(bento_url).open(open_timeout: READ_TIMEOUT, read_timeout: READ_TIMEOUT).read)
+      end
+
+      Zip::File.open(zip_path) do |zip_file|
+        zip_file.each do |entry|
+          entry.extract(destination_path) if entry.name.end_with?('/bin/mp4decrypt')
+        end
+      end
+      destination_path
+    end
   end
 end

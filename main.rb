@@ -13,7 +13,7 @@ train_portal = TrainPortal.train_portal
 api = train_portal::API
 
 def planned_exit
-  puts Pastel.new.yellow("\n\n🌅 Bye")
+  puts Pastel.new.yellow("\n\n🚄 Bye")
   exit 0
 end
 
@@ -42,7 +42,7 @@ end
 
 media_items = media.select_hash
 begin
-  selected_items = prompt.multi_select(pastel.yellow("📥 Select downloads:"), media_items)
+  selected_items = prompt.multi_select(pastel.yellow("📥 Select downloads:"), media_items, per_page: 8)
 rescue TTY::Reader::InputInterrupt
   planned_exit
 end
