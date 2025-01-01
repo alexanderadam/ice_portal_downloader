@@ -1,9 +1,9 @@
 # iceportal-downloader
 
-It only works when connected to the wifi of the Deutsche Bahn (i.e. [`WIFIonICE` / `WIFI@DB`](https://inside.bahn.de/wifionice-wlan-ice-login/)).
-Make sure that you're signed in first by visiting <https://login.wifionice.de> or <https://wifi.bahn.de>.
+It only works when connected to the wifi of the Deutsche Bahn (i.e. [`WIFIonICE` / `WIFI@DB`](https://inside.bahn.de/wifionice-wlan-ice-login/)), České dráhy (i.e. [`CDWiFi`](https://www.cd.cz/dalsi-sluzby/premiove-a-bonusove-sluzby/-26851/)) or [ÖBB](https://www.oebb.at/de/reiseplanung-services/im-zug/wlan-im-zug).
+Make sure that you're signed in first (i.e. by visiting <https://login.wifionice.de> or <https://wifi.bahn.de> or whatever portal you have).
 
-This is a small script that downloads all offered audiobooks and magazines from the [Deutsche Bahn ICE portal](https://iceportal.de/).
+This is a small script that downloads all offered audiobooks and magazines from the train media portals.
 
 <div align="center">
   <img src="https://github.com/SirBenedick/iceportal-audiobooks-downloader/blob/master/git.gif" alt="Gif showing how episodes are downloaded"/>

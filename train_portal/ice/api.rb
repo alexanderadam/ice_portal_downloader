@@ -15,7 +15,7 @@ module TrainPortal::Ice
     end
 
     def default_base_url = 'https://iceportal.de'
-    def media = [Magazines, Audiobooks]
+    def media = [Magazines, Audiobooks, Videos]
     def ice_wifi? = ICE_WIFI_SSIDS.include?(current_ssid)
   end
 end

@@ -9,7 +9,7 @@ gem 'addressable'
 gem 'nokogiri'
 gem 'm3u8'
 gem 'stringex'
-gem 'zip'
+gem 'rubyzip', '> 2.3'
 gem 'pastel'
 
 gem 'did_you_mean', '>= 1.5'
